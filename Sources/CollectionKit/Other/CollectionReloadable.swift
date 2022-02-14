@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol CollectionReloadable: class {
+public protocol CollectionReloadable: AnyObject {
   var collectionView: CollectionView? { get }
   func reloadData()
   func setNeedsReload()

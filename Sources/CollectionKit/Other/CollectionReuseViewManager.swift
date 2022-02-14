@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol CollectionViewReusableView: class {
+public protocol CollectionViewReusableView: AnyObject {
   func prepareForReuse()
 }
 
