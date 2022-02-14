@@ -8,13 +8,13 @@
 
 import UIKit
 
-struct FlattenedProvider: ItemProvider {
+public struct FlattenedProvider: ItemProvider {
 
   var provider: SectionProvider
 
   private var childSections: [(beginIndex: Int, sectionData: ItemProvider?)]
 
-  init(provider: SectionProvider) {
+  public init(provider: SectionProvider) {
     self.provider = provider
     var childSections: [(beginIndex: Int, sectionData: ItemProvider?)] = []
     childSections.reserveCapacity(provider.numberOfItems)
@@ -47,27 +47,27 @@ struct FlattenedProvider: ItemProvider {
     }
   }
 
-  var identifier: String? {
+  public var identifier: String? {
     return provider.identifier
   }
 
-  var numberOfItems: Int {
+  public var numberOfItems: Int {
     return (childSections.last?.beginIndex ?? 0) + (childSections.last?.sectionData?.numberOfItems ?? 0)
   }
 
-  func view(at: Int) -> UIView {
+  public func view(at: Int) -> UIView {
     return apply(at) {
       $0.view(at: $1)
     }
   }
 
-  func update(view: UIView, at: Int) {
+  public func update(view: UIView, at: Int) {
     return apply(at) {
       $0.update(view: view, at: $1)
     }
   }
 
-  func identifier(at: Int) -> String {
+  public func identifier(at: Int) -> String {
     let (sectionIndex, item) = indexPath(at)
     if let sectionData = childSections[sectionIndex].sectionData {
       return provider.identifier(at: sectionIndex) + "-" + sectionData.identifier(at: item)
@@ -76,15 +76,15 @@ struct FlattenedProvider: ItemProvider {
     }
   }
 
-  func layout(collectionSize: CGSize) {
+  public func layout(collectionSize: CGSize) {
     provider.layout(collectionSize: collectionSize)
   }
 
-  var contentSize: CGSize {
+  public var contentSize: CGSize {
     return provider.contentSize
   }
 
-  func visibleIndexes(visibleFrame: CGRect) -> [Int] {
+  public func visibleIndexes(visibleFrame: CGRect) -> [Int] {
     var visible = [Int]()
     for sectionIndex in provider.visibleIndexes(visibleFrame: visibleFrame) {
       let beginIndex = childSections[sectionIndex].beginIndex
@@ -103,7 +103,7 @@ struct FlattenedProvider: ItemProvider {
     return visible
   }
 
-  func frame(at: Int) -> CGRect {
+  public func frame(at: Int) -> CGRect {
     let (sectionIndex, item) = indexPath(at)
     if let sectionData = childSections[sectionIndex].sectionData {
       var frame = sectionData.frame(at: item)
@@ -114,27 +114,27 @@ struct FlattenedProvider: ItemProvider {
     }
   }
 
-  func animator(at: Int) -> Animator? {
+  public func animator(at: Int) -> Animator? {
     return apply(at) {
       $0.animator(at: $1)
     } ?? provider.animator(at: at)
   }
 
-  func willReload() {
+  public func willReload() {
     provider.willReload()
   }
 
-  func didReload() {
+  public func didReload() {
     provider.didReload()
   }
 
-  func didTap(view: UIView, at: Int) {
+  public func didTap(view: UIView, at: Int) {
     return apply(at) {
       $0.didTap(view: view, at: $1)
     }
   }
 
-  func hasReloadable(_ reloadable: CollectionReloadable) -> Bool {
+  public func hasReloadable(_ reloadable: CollectionReloadable) -> Bool {
     return provider.hasReloadable(reloadable)
   }
 }
