@@ -34,6 +34,7 @@ open class CollectionView: UIScrollView {
 
   public private(set) var lastLoadBounds: CGRect = .zero
   public private(set) var contentOffsetChange: CGPoint = .zero
+  public var shouldUpdateOnLayout = false
 
   lazy var flattenedProvider: ItemProvider = EmptyCollectionProvider()
   var identifierCache: [Int: String] = [:]
@@ -71,11 +72,12 @@ open class CollectionView: UIScrollView {
 
   open override func layoutSubviews() {
     super.layoutSubviews()
+    defer { shouldUpdateOnLayout = false }
     if needsReload {
       reloadData()
     } else if needsInvalidateLayout || bounds.size != lastLoadBounds.size {
       invalidateLayout()
-    } else if bounds != lastLoadBounds {
+    } else if bounds != lastLoadBounds || shouldUpdateOnLayout {
       loadCells()
     }
   }
