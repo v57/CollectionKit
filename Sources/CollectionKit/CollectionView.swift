@@ -31,6 +31,12 @@ open class CollectionView: UIScrollView {
   public private(set) var visibleIndexes: [Int] = []
   public private(set) var visibleCells: [UIView] = []
   public private(set) var visibleIdentifiers: [String] = []
+  open override var contentInset: UIEdgeInsets {
+    didSet {
+      shouldUpdateOnLayout = true
+      setNeedsLayout()
+    }
+  }
 
   public private(set) var lastLoadBounds: CGRect = .zero
   public private(set) var contentOffsetChange: CGPoint = .zero
