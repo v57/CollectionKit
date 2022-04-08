@@ -105,7 +105,7 @@ open class CollectionView: UIScrollView {
    * load cells that move into the visibleFrame and recycles them when
    * they move out of the visibleFrame.
    */
-  func loadCells() {
+  open func loadCells() {
     guard !isLoadingCell && !isReloading && hasReloaded else { return }
     isLoadingCell = true
 
