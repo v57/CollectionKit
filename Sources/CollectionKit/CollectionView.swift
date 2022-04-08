@@ -127,7 +127,7 @@ open class CollectionView: UIScrollView {
   }
 
   // reload all frames. will automatically diff insertion & deletion
-  public func reloadData(contentOffsetAdjustFn: (() -> CGPoint)? = nil) {
+  open func reloadData(contentOffsetAdjustFn: (() -> CGPoint)? = nil) {
     guard !isReloading else { return }
     provider?.willReload()
     flattenedProvider = (provider ?? EmptyCollectionProvider()).flattenedProvider()
@@ -165,7 +165,7 @@ open class CollectionView: UIScrollView {
     flattenedProvider.didReload()
   }
 
-  private func _loadCells(forceReload: Bool) {
+  open func _loadCells(forceReload: Bool) {
     let newIndexes = flattenedProvider.visibleIndexes(visibleFrame: visibleFrame)
 
     // optimization: we assume that corresponding identifier for each index doesnt change unless forceReload is true.
