@@ -18,6 +18,7 @@ open class CollectionView: UIScrollView {
     didSet { setNeedsReload() }
   }
 
+  public private(set) var needsLayout = false
   public private(set) var reloadCount = 0
   public private(set) var needsReload = true
   public private(set) var needsInvalidateLayout = false
@@ -75,8 +76,20 @@ open class CollectionView: UIScrollView {
       }
     }
   }
+  open override func didMoveToWindow() {
+    super.didMoveToWindow()
+    // setNeedsLayout will not call layoutSubviews if its not in a window
+    // so we have to repeat when it gets into a window
+    guard window != nil && needsLayout else { return }
+    setNeedsLayout()
+  }
+  open override func setNeedsLayout() {
+    needsLayout = true
+    super.setNeedsLayout()
+  }
 
   open override func layoutSubviews() {
+    needsLayout = false
     super.layoutSubviews()
     defer { shouldUpdateOnLayout = false }
     if needsReload {
@@ -254,16 +267,12 @@ extension CollectionView {
   }
 
   public func index(for cell: UIView) -> Int? {
-    if let position = visibleCells.firstIndex(of: cell) {
-      return visibleIndexes[position]
-    }
-    return nil
+    guard let position = visibleCells.firstIndex(of: cell) else { return nil }
+    return visibleIndexes[position]
   }
 
   public func cell(at index: Int) -> UIView? {
-    if let position = visibleIndexes.firstIndex(of: index) {
-      return visibleCells[position]
-    }
-    return nil
+    guard let position = visibleIndexes.firstIndex(of: index) else { return nil }
+    return visibleCells[position]
   }
 }
