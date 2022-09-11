@@ -11,12 +11,12 @@ import UIKit
 open class SimpleViewProvider: BasicProvider<UIView, UIView> {
 
   open var views: [UIView] {
-    get { return viewDataSource.data }
+    get { viewDataSource.data }
     set { viewDataSource.data = newValue }
   }
 
   open var identifierMapper: IdentifierMapperFn<UIView> {
-    get { return viewDataSource.identifierMapper }
+    get { viewDataSource.identifierMapper }
     set { viewDataSource.identifierMapper = newValue }
   }
 
@@ -24,7 +24,7 @@ open class SimpleViewProvider: BasicProvider<UIView, UIView> {
 
   private class SimpleViewProviderViewSource: ViewSource<UIView, UIView> {
     override func view(data: UIView, index: Int) -> UIView {
-      return data
+      data
     }
   }
 

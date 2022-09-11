@@ -63,7 +63,7 @@ public class CollectionReuseViewManager: NSObject {
   }
 
   public func dequeue<T: UIView> (type: T.Type) -> T {
-    return dequeue(type.init())
+    dequeue(type.init())
   }
 
   @objc func cleanup() {

@@ -10,33 +10,24 @@ import UIKit
 
 open class SimpleLayout: Layout {
   var _contentSize: CGSize = .zero
+  public init() { }
   public private(set) var frames: [CGRect] = []
-
   open func simpleLayout(context: LayoutContext) -> [CGRect] {
     fatalError("Subclass should provide its own layout")
   }
-
-  open func doneLayout() {
-
-  }
-
-  public final override func layout(context: LayoutContext) {
+  open func doneLayout() {}
+  public final func layout(context: LayoutContext) {
     frames = simpleLayout(context: context)
     _contentSize = frames.reduce(CGRect.zero) { (old, item) in
       old.union(item)
     }.size
     doneLayout()
   }
-
-  public final override var contentSize: CGSize {
-    return _contentSize
+  public final var contentSize: CGSize { _contentSize }
+  public final func frame(at: Int) -> CGRect {
+    frames[at]
   }
-
-  public final override func frame(at: Int) -> CGRect {
-    return frames[at]
-  }
-
-  open override func visibleIndexes(visibleFrame: CGRect) -> [Int] {
+  open func visibleIndexes(visibleFrame: CGRect) -> [Int] {
     var result = [Int]()
     for (i, frame) in frames.enumerated() {
       if frame.intersects(visibleFrame) {

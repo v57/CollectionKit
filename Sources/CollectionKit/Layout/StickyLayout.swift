@@ -9,6 +9,7 @@
 import UIKit
 
 public class StickyLayout: WrapperLayout {
+  public var rootLayout: Layout
   public var isStickyFn: (Int) -> Bool
 
   var stickyFrames: [(index: Int, frame: CGRect)] = []
@@ -18,14 +19,14 @@ public class StickyLayout: WrapperLayout {
   public init(rootLayout: Layout,
               isStickyFn: @escaping (Int) -> Bool = { $0 % 2 == 0 }) {
     self.isStickyFn = isStickyFn
-    super.init(rootLayout)
+    self.rootLayout = rootLayout
   }
 
-  public override var contentSize: CGSize {
-    return rootLayout.contentSize
+  public var contentSize: CGSize {
+    rootLayout.contentSize
   }
 
-  public override func layout(context: LayoutContext) {
+  public func layout(context: LayoutContext) {
     rootLayout.layout(context: context)
     stickyFrames = (0..<context.numberOfItems).filter {
       isStickyFn($0)
@@ -34,7 +35,7 @@ public class StickyLayout: WrapperLayout {
     }
   }
 
-  public override func visibleIndexes(visibleFrame: CGRect) -> [Int] {
+  public func visibleIndexes(visibleFrame: CGRect) -> [Int] {
     self.visibleFrame = visibleFrame
     topFrameIndex = stickyFrames.binarySearch { $0.frame.minY < visibleFrame.minY } - 1
     if let index = stickyFrames.get(topFrameIndex)?.index, index >= 0 {
@@ -47,7 +48,7 @@ public class StickyLayout: WrapperLayout {
     return rootLayout.visibleIndexes(visibleFrame: visibleFrame)
   }
 
-  public override func frame(at: Int) -> CGRect {
+  public func frame(at: Int) -> CGRect {
     let superFrame = rootLayout.frame(at: at)
     if superFrame.minY < visibleFrame.minY, let index = stickyFrames.get(topFrameIndex)?.index, index == at {
       let pushedY: CGFloat

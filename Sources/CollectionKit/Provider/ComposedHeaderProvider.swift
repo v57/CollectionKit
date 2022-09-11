@@ -15,7 +15,6 @@ public struct HeaderData {
 
 open class ComposedHeaderProvider<HeaderView: UIView>:
   SectionProvider, ItemProvider, LayoutableProvider, CollectionReloadable {
-
   public typealias HeaderViewSource = ViewSource<HeaderData, HeaderView>
   public typealias HeaderSizeSource = SizeSource<HeaderData>
 
@@ -38,7 +37,7 @@ open class ComposedHeaderProvider<HeaderView: UIView>:
   }
 
   open var layout: Layout {
-    get { return stickyLayout.rootLayout }
+    get { stickyLayout.rootLayout }
     set {
       stickyLayout.rootLayout = newValue
       setNeedsInvalidateLayout()
@@ -67,7 +66,7 @@ open class ComposedHeaderProvider<HeaderView: UIView>:
   }
 
   private var stickyLayout: StickyLayout
-  public var internalLayout: Layout { return stickyLayout }
+  public var internalLayout: Layout { stickyLayout }
 
   public init(identifier: String? = nil,
               layout: Layout = FlowLayout(),
@@ -86,7 +85,7 @@ open class ComposedHeaderProvider<HeaderView: UIView>:
   }
 
   open var numberOfItems: Int {
-    return sections.count * 2
+    sections.count * 2
   }
 
   open func section(at: Int) -> Provider? {
@@ -107,7 +106,7 @@ open class ComposedHeaderProvider<HeaderView: UIView>:
   }
 
   open func layoutContext(collectionSize: CGSize) -> LayoutContext {
-    return ComposedHeaderProviderLayoutContext(
+    ComposedHeaderProviderLayoutContext(
       collectionSize: collectionSize,
       sections: sections,
       headerSizeSource: headerSizeSource
@@ -115,7 +114,7 @@ open class ComposedHeaderProvider<HeaderView: UIView>:
   }
 
   open func animator(at: Int) -> Animator? {
-    return animator
+    animator
   }
 
   open func view(at: Int) -> UIView {
@@ -152,12 +151,12 @@ open class ComposedHeaderProvider<HeaderView: UIView>:
 
   // MARK: private stuff
   open func hasReloadable(_ reloadable: CollectionReloadable) -> Bool {
-    return reloadable === self || reloadable === headerSizeSource
+    reloadable === self || reloadable === headerSizeSource
       || sections.contains(where: { $0.hasReloadable(reloadable) })
   }
 
   open func flattenedProvider() -> ItemProvider {
-    return FlattenedProvider(provider: self)
+    FlattenedProvider(provider: self)
   }
 
   struct ComposedHeaderProviderLayoutContext: LayoutContext {
@@ -165,9 +164,7 @@ open class ComposedHeaderProvider<HeaderView: UIView>:
     var sections: [Provider]
     var headerSizeSource: HeaderSizeSource
 
-    var numberOfItems: Int {
-      return sections.count * 2
-    }
+    var numberOfItems: Int { sections.count * 2 }
     func data(at: Int) -> Any {
       if at % 2 == 0 {
         return HeaderData(index: at / 2, section: sections[at / 2])

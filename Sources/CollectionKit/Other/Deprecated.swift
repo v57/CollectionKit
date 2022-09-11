@@ -65,12 +65,10 @@ extension BasicProvider {
   public typealias OldTapHandler = (View, Int, DataSource<Data>) -> Void
 
   private static func convertTapHandler(_ tapHandler: OldTapHandler?) -> TapHandler? {
-    if let tapHandler = tapHandler {
-      return { context in
-        tapHandler(context.view, context.index, context.dataSource)
-      }
+    guard let tapHandler = tapHandler else { return nil }
+    return { context in
+      tapHandler(context.view, context.index, context.dataSource)
     }
-    return nil
   }
 
   @available(*, deprecated, message: "please use designated init instead")

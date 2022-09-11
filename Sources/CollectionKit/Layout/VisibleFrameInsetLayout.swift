@@ -9,28 +9,29 @@
 import UIKit
 
 open class VisibleFrameInsetLayout: WrapperLayout {
+  public var rootLayout: Layout
   public var insets: UIEdgeInsets
   public var insetProvider: ((CGSize) -> UIEdgeInsets)?
 
   public init(_ rootLayout: Layout, insets: UIEdgeInsets = .zero) {
     self.insets = insets
-    super.init(rootLayout)
+    self.rootLayout = rootLayout
   }
 
   public init(_ rootLayout: Layout, insetProvider: @escaping ((CGSize) -> UIEdgeInsets)) {
     self.insets = .zero
     self.insetProvider = insetProvider
-    super.init(rootLayout)
+    self.rootLayout = rootLayout
   }
 
-  open override func layout(context: LayoutContext) {
+  open func layout(context: LayoutContext) {
     if let insetProvider = insetProvider {
       insets = insetProvider(context.collectionSize)
     }
-    super.layout(context: context)
+    rootLayout.layout(context: context)
   }
 
-  open override func visibleIndexes(visibleFrame: CGRect) -> [Int] {
-    return rootLayout.visibleIndexes(visibleFrame: visibleFrame.inset(by: insets))
+  open func visibleIndexes(visibleFrame: CGRect) -> [Int] {
+    rootLayout.visibleIndexes(visibleFrame: visibleFrame.inset(by: insets))
   }
 }

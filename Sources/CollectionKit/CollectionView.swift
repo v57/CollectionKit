@@ -23,7 +23,7 @@ open class CollectionView: UIScrollView {
   public private(set) var needsInvalidateLayout = false
   public private(set) var isLoadingCell = false
   public private(set) var isReloading = false
-  public var hasReloaded: Bool { return reloadCount > 0 }
+  public var hasReloaded: Bool { reloadCount > 0 }
 
   public let tapGestureRecognizer = UITapGestureRecognizer()
 

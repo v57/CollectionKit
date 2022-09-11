@@ -14,6 +14,6 @@ open class SizeSource<Data> {
 
   // override point for subclass
   open func size(at index: Int, data: Data, collectionSize: CGSize) -> CGSize {
-    return collectionSize
+    collectionSize
   }
 }

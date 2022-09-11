@@ -15,19 +15,13 @@ public protocol LayoutableProvider {
 }
 
 extension LayoutableProvider where Self: Provider {
-  public var internalLayout: Layout {
-    return layout
-  }
+  public var internalLayout: Layout { layout }
   public func layout(collectionSize: CGSize) {
     internalLayout.layout(context: layoutContext(collectionSize: collectionSize))
   }
   public func visibleIndexes(visibleFrame: CGRect) -> [Int] {
-    return internalLayout.visibleIndexes(visibleFrame: visibleFrame)
+    internalLayout.visibleIndexes(visibleFrame: visibleFrame)
   }
-  public var contentSize: CGSize {
-    return internalLayout.contentSize
-  }
-  public func frame(at: Int) -> CGRect {
-    return internalLayout.frame(at: at)
-  }
+  public var contentSize: CGSize { internalLayout.contentSize }
+  public func frame(at: Int) -> CGRect { internalLayout.frame(at: at) }
 }

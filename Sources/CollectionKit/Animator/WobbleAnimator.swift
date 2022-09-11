@@ -13,9 +13,7 @@ open class WobbleAnimator: Animator {
   public var sensitivity: CGPoint = CGPoint(x: 1, y: 1)
 
   func scrollVelocity(collectionView: CollectionView) -> CGPoint {
-    guard collectionView.hasReloaded else {
-      return .zero
-    }
+    guard collectionView.hasReloaded else { return .zero }
     let velocity = collectionView.bounds.origin - collectionView.lastLoadBounds.origin
     if collectionView.isReloading {
       return velocity - collectionView.contentOffsetChange

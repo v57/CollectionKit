@@ -20,6 +20,6 @@ public class ComposedViewSource<Data>: ViewSource<Data, UIView> {
   }
 
   public override func view(data: Data, index: Int) -> UIView {
-    return viewSourceSelector(data).anyView(data: data, index: index)
+    viewSourceSelector(data).anyView(data: data, index: index)
   }
 }

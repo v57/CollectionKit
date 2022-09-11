@@ -14,6 +14,6 @@ public protocol SectionProvider: Provider {
 
 extension SectionProvider {
   public func flattenedProvider() -> ItemProvider {
-    return FlattenedProvider(provider: self)
+    FlattenedProvider(provider: self)
   }
 }

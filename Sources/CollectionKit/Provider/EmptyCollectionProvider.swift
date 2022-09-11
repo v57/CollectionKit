@@ -16,29 +16,29 @@ open class EmptyCollectionProvider: ItemProvider, CollectionReloadable {
   }
 
   open var numberOfItems: Int {
-    return 0
+    0
   }
   open func view(at: Int) -> UIView {
-    return UIView()
+    UIView()
   }
   open func update(view: UIView, at: Int) {}
   open func identifier(at: Int) -> String {
-    return "\(at)"
+    "\(at)"
   }
 
   open var contentSize: CGSize {
-    return .zero
+    .zero
   }
   open func layout(collectionSize: CGSize) {}
   open func frame(at: Int) -> CGRect {
-    return .zero
+    .zero
   }
   open func visibleIndexes(visibleFrame: CGRect) -> [Int] {
-    return [Int]()
+    [Int]()
   }
 
   open func animator(at: Int) -> Animator? {
-    return nil
+    nil
   }
 
   open func willReload() {}
@@ -46,6 +46,6 @@ open class EmptyCollectionProvider: ItemProvider, CollectionReloadable {
   open func didTap(view: UIView, at: Int) {}
 
   open func hasReloadable(_ reloadable: CollectionReloadable) -> Bool {
-    return reloadable === self
+    reloadable === self
   }
 }

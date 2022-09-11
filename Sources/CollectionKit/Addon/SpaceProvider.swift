@@ -20,7 +20,7 @@ open class SpaceProvider: EmptyCollectionProvider {
   }
   var _contentSize: CGSize = .zero
   open override var contentSize: CGSize {
-    return _contentSize
+    _contentSize
   }
   open override func layout(collectionSize: CGSize) {
     let width: CGFloat, height: CGFloat

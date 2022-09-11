@@ -9,25 +9,21 @@
 import UIKit
 
 extension UIScrollView {
-  public var visibleFrame: CGRect {
-    return bounds
-  }
+  public var visibleFrame: CGRect { bounds }
   public var visibleFrameLessInset: CGRect {
-    return visibleFrame.inset(by: contentInset)
+    visibleFrame.inset(by: contentInset)
   }
   public var absoluteFrameLessInset: CGRect {
-    return CGRect(origin: .zero, size: bounds.size).inset(by: contentInset)
+    CGRect(origin: .zero, size: bounds.size).inset(by: contentInset)
   }
-  public var innerSize: CGSize {
-    return absoluteFrameLessInset.size
-  }
+  public var innerSize: CGSize { absoluteFrameLessInset.size }
   public var offsetFrame: CGRect {
-    return CGRect(x: -contentInset.left, y: -contentInset.top,
+    CGRect(x: -contentInset.left, y: -contentInset.top,
                   width: max(0, contentSize.width - bounds.width + contentInset.right + contentInset.left),
                   height: max(0, contentSize.height - bounds.height + contentInset.bottom + contentInset.top))
   }
   public func absoluteLocation(for point: CGPoint) -> CGPoint {
-    return point - contentOffset
+    point - contentOffset
   }
   public func scrollTo(edge: UIRectEdge, animated: Bool) {
     let target: CGPoint

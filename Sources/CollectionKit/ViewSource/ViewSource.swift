@@ -26,10 +26,10 @@ open class ViewSource<Data, View: UIView> {
 
 extension ViewSource: AnyViewSource {
   public final func anyView(data: Any, index: Int) -> UIView {
-    return view(data: data as! Data, index: index)
+    view(data: data as! Data, index: index)
   }
 
   public final func anyUpdate(view: UIView, data: Any, index: Int) {
-    return update(view: view as! View, data: data as! Data, index: index)
+    update(view: view as! View, data: data as! Data, index: index)
   }
 }

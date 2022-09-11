@@ -19,6 +19,6 @@ open class ClosureSizeSource<Data>: SizeSource<Data> {
   }
 
   open override func size(at index: Int, data: Data, collectionSize: CGSize) -> CGSize {
-    return sizeSource(index, data, collectionSize)
+    sizeSource(index, data, collectionSize)
   }
 }

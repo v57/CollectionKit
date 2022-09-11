@@ -26,26 +26,26 @@ open class ComposedProvider: SectionProvider, LayoutableProvider, CollectionRelo
   }
 
   open var numberOfItems: Int {
-    return sections.count
+    sections.count
   }
 
   open func section(at: Int) -> Provider? {
-    return sections[at]
+    sections[at]
   }
 
   open func identifier(at: Int) -> String {
-    return sections[at].identifier ?? "\(at)"
+    sections[at].identifier ?? "\(at)"
   }
 
   open func layoutContext(collectionSize: CGSize) -> LayoutContext {
-    return CollectionComposerLayoutContext(
+    Context(
       collectionSize: collectionSize,
       sections: sections
     )
   }
 
   open func animator(at: Int) -> Animator? {
-    return animator
+    animator
   }
 
   open func willReload() {
@@ -61,25 +61,18 @@ open class ComposedProvider: SectionProvider, LayoutableProvider, CollectionRelo
   }
 
   open func hasReloadable(_ reloadable: CollectionReloadable) -> Bool {
-    return reloadable === self || sections.contains(where: { $0.hasReloadable(reloadable) })
+    reloadable === self || sections.contains(where: { $0.hasReloadable(reloadable) })
   }
-}
-
-struct CollectionComposerLayoutContext: LayoutContext {
-  var collectionSize: CGSize
-  var sections: [Provider]
-
-  var numberOfItems: Int {
-    return sections.count
-  }
-  func data(at: Int) -> Any {
-    return sections[at]
-  }
-  func identifier(at: Int) -> String {
-    return sections[at].identifier ?? "\(at)"
-  }
-  func size(at: Int, collectionSize: CGSize) -> CGSize {
-    sections[at].layout(collectionSize: collectionSize)
-    return sections[at].contentSize
+  
+  private struct Context: LayoutContext {
+    var collectionSize: CGSize
+    var sections: [Provider]
+    var numberOfItems: Int { sections.count }
+    func data(at: Int) -> Any { sections[at] }
+    func identifier(at: Int) -> String { sections[at].identifier ?? "\(at)" }
+    func size(at: Int, collectionSize: CGSize) -> CGSize {
+      sections[at].layout(collectionSize: collectionSize)
+      return sections[at].contentSize
+    }
   }
 }

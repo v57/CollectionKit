@@ -45,6 +45,6 @@ public class EmptyStateProvider: ComposedProvider {
   }
 
   open override func hasReloadable(_ reloadable: CollectionReloadable) -> Bool {
-    return super.hasReloadable(reloadable) || contentProvider.hasReloadable(reloadable)
+    super.hasReloadable(reloadable) || contentProvider.hasReloadable(reloadable)
   }
 }

@@ -8,26 +8,18 @@
 
 import UIKit
 
-open class WrapperLayout: Layout {
-  public var rootLayout: Layout
-
-  public init(_ rootLayout: Layout) {
-    self.rootLayout = rootLayout
-  }
-
-  open override var contentSize: CGSize {
-    return rootLayout.contentSize
-  }
-
-  open override func layout(context: LayoutContext) {
+public protocol WrapperLayout: Layout {
+  var rootLayout: Layout { get }
+}
+extension WrapperLayout {
+  public var contentSize: CGSize { rootLayout.contentSize }
+  public func layout(context: LayoutContext) {
     rootLayout.layout(context: context)
   }
-
-  open override func visibleIndexes(visibleFrame: CGRect) -> [Int] {
-    return rootLayout.visibleIndexes(visibleFrame: visibleFrame)
+  public func visibleIndexes(visibleFrame: CGRect) -> [Int] {
+    rootLayout.visibleIndexes(visibleFrame: visibleFrame)
   }
-
-  open override func frame(at: Int) -> CGRect {
-    return rootLayout.frame(at: at)
+  public func frame(at: Int) -> CGRect {
+    rootLayout.frame(at: at)
   }
 }

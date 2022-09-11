@@ -30,14 +30,14 @@ open class ArrayDataSource<Data>: DataSource<Data> {
   }
 
   open override var numberOfItems: Int {
-    return data.count
+    data.count
   }
 
   open override func identifier(at: Int) -> String {
-    return identifierMapper(at, data[at])
+    identifierMapper(at, data[at])
   }
 
   open override func data(at: Int) -> Data {
-    return data[at]
+    data[at]
   }
 }

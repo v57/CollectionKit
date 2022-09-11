@@ -2,10 +2,8 @@ import UIKit
 
 extension Array {
   func get(_ index: Int) -> Element? {
-    if (0..<count).contains(index) {
-      return self[index]
-    }
-    return nil
+    guard (0..<count).contains(index) else { return nil }
+    return self[index]
   }
 }
 
@@ -31,35 +29,31 @@ extension Collection {
 
 extension CGFloat {
   func clamp(_ minValue: CGFloat, _ maxValue: CGFloat) -> CGFloat {
-    return self < minValue ? minValue : (self > maxValue ? maxValue : self)
+    self < minValue ? minValue : (self > maxValue ? maxValue : self)
   }
 }
 
 extension CGPoint {
   func translate(_ dx: CGFloat, dy: CGFloat) -> CGPoint {
-    return CGPoint(x: self.x+dx, y: self.y+dy)
+    CGPoint(x: self.x+dx, y: self.y+dy)
   }
 
   func transform(_ trans: CGAffineTransform) -> CGPoint {
-    return self.applying(trans)
+    self.applying(trans)
   }
 
   func distance(_ point: CGPoint) -> CGFloat {
-    return sqrt(pow(self.x - point.x, 2)+pow(self.y - point.y, 2))
+    sqrt(pow(self.x - point.x, 2)+pow(self.y - point.y, 2))
   }
 
-  var transposed: CGPoint {
-    return CGPoint(x: y, y: x)
-  }
+  var transposed: CGPoint { CGPoint(x: y, y: x) }
 }
 
 extension CGSize {
   func insets(by insets: UIEdgeInsets) -> CGSize {
-    return CGSize(width: width - insets.left - insets.right, height: height - insets.top - insets.bottom)
+    CGSize(width: width - insets.left - insets.right, height: height - insets.top - insets.bottom)
   }
-  var transposed: CGSize {
-    return CGSize(width: height, height: width)
-  }
+  var transposed: CGSize { CGSize(width: height, height: width) }
 }
 
 func abs(_ left: CGPoint) -> CGPoint {
@@ -111,22 +105,16 @@ prefix func - (inset: UIEdgeInsets) -> UIEdgeInsets {
 }
 
 extension CGRect {
-  var center: CGPoint {
-    return CGPoint(x: midX, y: midY)
-  }
-  var bounds: CGRect {
-    return CGRect(origin: .zero, size: size)
-  }
+  var center: CGPoint { CGPoint(x: midX, y: midY) }
+  var bounds: CGRect { CGRect(origin: .zero, size: size) }
   init(center: CGPoint, size: CGSize) {
     self.init(origin: center - size / 2, size: size)
   }
-  var transposed: CGRect {
-    return CGRect(origin: origin.transposed, size: size.transposed)
-  }
+  var transposed: CGRect { CGRect(origin: origin.transposed, size: size.transposed) }
 #if swift(>=4.2)
 #else
   func inset(by insets: UIEdgeInsets) -> CGRect {
-    return UIEdgeInsetsInsetRect(self, insets)
+    UIEdgeInsetsInsetRect(self, insets)
   }
 #endif
 }

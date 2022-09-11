@@ -29,14 +29,14 @@ open class ClosureDataSource<Data>: DataSource<Data> {
   }
 
   open override var numberOfItems: Int {
-    return getter().count
+    getter().count
   }
 
   open override func identifier(at: Int) -> String {
-    return identifierMapper(at, getter()[at])
+    identifierMapper(at, getter()[at])
   }
 
   open override func data(at: Int) -> Data {
-    return getter()[at]
+    getter()[at]
   }
 }

@@ -48,21 +48,21 @@ public struct FlattenedProvider: ItemProvider {
   }
 
   public var identifier: String? {
-    return provider.identifier
+    provider.identifier
   }
 
   public var numberOfItems: Int {
-    return (childSections.last?.beginIndex ?? 0) + (childSections.last?.sectionData?.numberOfItems ?? 0)
+    (childSections.last?.beginIndex ?? 0) + (childSections.last?.sectionData?.numberOfItems ?? 0)
   }
 
   public func view(at: Int) -> UIView {
-    return apply(at) {
+    apply(at) {
       $0.view(at: $1)
     }
   }
 
   public func update(view: UIView, at: Int) {
-    return apply(at) {
+    apply(at) {
       $0.update(view: view, at: $1)
     }
   }
@@ -81,7 +81,7 @@ public struct FlattenedProvider: ItemProvider {
   }
 
   public var contentSize: CGSize {
-    return provider.contentSize
+    provider.contentSize
   }
 
   public func visibleIndexes(visibleFrame: CGRect) -> [Int] {
@@ -115,7 +115,7 @@ public struct FlattenedProvider: ItemProvider {
   }
 
   public func animator(at: Int) -> Animator? {
-    return apply(at) {
+    apply(at) {
       $0.animator(at: $1)
     } ?? provider.animator(at: at)
   }
@@ -129,12 +129,12 @@ public struct FlattenedProvider: ItemProvider {
   }
 
   public func didTap(view: UIView, at: Int) {
-    return apply(at) {
+    apply(at) {
       $0.didTap(view: view, at: $1)
     }
   }
 
   public func hasReloadable(_ reloadable: CollectionReloadable) -> Bool {
-    return provider.hasReloadable(reloadable)
+    provider.hasReloadable(reloadable)
   }
 }

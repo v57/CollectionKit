@@ -16,7 +16,5 @@ public protocol ItemProvider: Provider {
 }
 
 extension ItemProvider {
-  public func flattenedProvider() -> ItemProvider {
-    return self
-  }
+  public func flattenedProvider() -> ItemProvider { self }
 }

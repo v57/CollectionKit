@@ -9,14 +9,8 @@
 import Foundation
 
 open class DataSource<Data>: CollectionReloadable {
-  open var numberOfItems: Int {
-    return 0
-  }
-  open func data(at: Int) -> Data {
-    fatalError()
-  }
-  open func identifier(at: Int) -> String {
-    return "\(at)"
-  }
+  open var numberOfItems: Int { 0 }
+  open func data(at: Int) -> Data { fatalError() }
+  open func identifier(at: Int) -> String { "\(at)" }
   public init() {}
 }

@@ -16,7 +16,7 @@ public protocol CollectionReloadable: AnyObject {
 
 extension CollectionReloadable {
   public var collectionView: CollectionView? {
-    return CollectionViewManager.shared.collectionView(for: self)
+    CollectionViewManager.shared.collectionView(for: self)
   }
   public func reloadData() {
     collectionView?.reloadData()
