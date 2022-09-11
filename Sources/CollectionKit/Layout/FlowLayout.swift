@@ -69,7 +69,11 @@ public class FlowLayout: VerticalSimpleLayout {
 
       frames.append(contentsOf: lineFrames)
 
-      yOffset += lineSize.height + spacing
+      if lineSize.height > 0 {
+        yOffset += lineSize.height + spacing
+      } else {
+        yOffset += lineSize.height
+      }
       index += count
     }
 
